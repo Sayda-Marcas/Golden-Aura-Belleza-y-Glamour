@@ -1,1 +1,256 @@
-https://lh3.googleusercontent.com/gg-dl/ABS2GSljGmDB5GHcg9kpeTeAX0aukNiV8LyFJGfRZNIfN-5pftMfV_pTH_ClRgpLE7SlILcmBAsOr4xUIOnw8cy--jtKYPKmKpekvX86WLczqAnIEh667mQV7NXqeR_9AQ9eMy2mYXxV-pBG839-eV4h8s1CcZBav61qiy_i_NnwF7eSik9Bsw=s1024-rj
+import React, { useState, useEffect } from 'react';
+import { ShoppingCart, Star, Search, Facebook, Instagram, Phone, X, Check } from 'lucide-react';
+
+const App = () => {
+  const [cart, setCart] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [category, setCategory] = useState('Todos');
+
+  const products = [
+    {
+      id: 1,
+      name: "Paleta Golden Blush",
+      category: "Maquillaje",
+      price: 85.00,
+      description: "Tonos tierra y dorados para un acabado radiante.",
+      rating: 5,
+      image: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&q=80&w=400"
+    },
+    {
+      id: 2,
+      name: "Perfume Aura Noir",
+      category: "Fragancias",
+      price: 120.00,
+      description: "Fragancia intensa con notas de jazmín y sándalo.",
+      rating: 5,
+      image: "https://images.unsplash.com/photo-1544467316-1974514624ae?auto=format&fit=crop&q=80&w=400"
+    },
+    {
+      id: 3,
+      name: "Labial Velvet Gold",
+      category: "Maquillaje",
+      price: 45.00,
+      description: "Mate de larga duración con micro-partículas de brillo.",
+      rating: 4,
+      image: "https://images.unsplash.com/photo-1586776977607-310e9c725c37?auto=format&fit=crop&q=80&w=400"
+    },
+    {
+      id: 4,
+      name: "Collar Perlas Imperiales",
+      category: "Accesorios",
+      price: 150.00,
+      description: "Perlas seleccionadas con broche bañado en oro.",
+      rating: 5,
+      image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=400"
+    },
+    {
+      id: 5,
+      name: "Base Iluminadora",
+      category: "Maquillaje",
+      price: 75.00,
+      description: "Cobertura media con efecto seda natural.",
+      rating: 4,
+      image: "https://images.unsplash.com/photo-1631730359585-38a4935cbb4e?auto=format&fit=crop&q=80&w=400"
+    },
+    {
+      id: 6,
+      name: "Set de Brochas Golden",
+      category: "Accesorios",
+      price: 95.00,
+      description: "8 piezas profesionales con estuche de cuero sintético.",
+      rating: 5,
+      image: "https://images.unsplash.com/photo-1522338242992-e1a54906a8da?auto=format&fit=crop&q=80&w=400"
+    }
+  ];
+
+  const addToCart = (product) => {
+    setCart([...cart, product]);
+  };
+
+  const removeFromCart = (index) => {
+    const newCart = [...cart];
+    newCart.splice(index, 1);
+    setCart(newCart);
+  };
+
+  const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+  const filteredProducts = products.filter(p => 
+    (category === 'Todos' || p.category === category) &&
+    p.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <div className="min-h-screen bg-neutral-900 text-amber-50 font-sans">
+      {/* Header Estilo Luxury */}
+      <header className="sticky top-0 z-50 bg-black/90 border-b border-amber-600/30 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="text-center md:text-left">
+            <h1 className="text-3xl font-serif font-bold tracking-widest text-amber-400">GOLDEN AURA</h1>
+            <p className="text-xs uppercase tracking-[0.3em] text-amber-200/70">Belleza y Elegancia a tu Alcance</p>
+          </div>
+
+          <div className="flex items-center gap-4 w-full md:w-auto">
+            <div className="relative flex-1">
+              <input 
+                type="text" 
+                placeholder="Buscar producto..." 
+                className="w-full bg-neutral-800 border border-amber-900 rounded-full py-2 px-10 text-sm focus:outline-none focus:ring-1 focus:ring-amber-500"
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <Search className="absolute left-3 top-2.5 w-4 h-4 text-amber-600" />
+            </div>
+            
+            <button 
+              onClick={() => setIsCartOpen(true)}
+              className="relative p-2 bg-amber-600 rounded-full hover:bg-amber-500 transition-colors"
+            >
+              <ShoppingCart className="w-6 h-6 text-black" />
+              {cart.length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-white text-black text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-black">
+                  {cart.length}
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Banner */}
+      <section className="relative h-[40vh] bg-gradient-to-r from-black via-amber-950 to-black flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 opacity-40 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+        <div className="text-center z-10 px-4">
+          <h2 className="text-4xl md:text-5xl font-serif text-amber-300 mb-2">Sayda Josefina Gonzales Marcas</h2>
+          <div className="h-1 w-24 bg-amber-500 mx-auto mb-4"></div>
+          <p className="text-amber-100 italic text-lg font-light">Atención: Todos los días</p>
+        </div>
+      </section>
+
+      {/* Categorías */}
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="flex flex-wrap justify-center gap-4 mb-10">
+          {['Todos', 'Maquillaje', 'Fragancias', 'Accesorios'].map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setCategory(cat)}
+              className={`px-6 py-2 rounded-full border border-amber-600/50 transition-all ${category === cat ? 'bg-amber-600 text-black' : 'hover:bg-amber-900/40'}`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Grid de Productos */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredProducts.map((product) => (
+            <div key={product.id} className="group bg-neutral-800 rounded-xl overflow-hidden border border-amber-900/20 hover:border-amber-500/50 transition-all duration-300 shadow-xl">
+              <div className="relative h-64 overflow-hidden">
+                <img 
+                  src={product.image} 
+                  alt={product.name}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-amber-400 text-xs font-bold">
+                  {product.category}
+                </div>
+              </div>
+              <div className="p-6">
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-xl font-serif text-amber-100">{product.name}</h3>
+                  <div className="flex text-amber-500">
+                    {[...Array(product.rating)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
+                  </div>
+                </div>
+                <p className="text-neutral-400 text-sm mb-4 line-clamp-2">{product.description}</p>
+                <div className="flex justify-between items-center">
+                  <span className="text-2xl font-bold text-amber-400">S/ {product.price.toFixed(2)}</span>
+                  <button 
+                    onClick={() => addToCart(product)}
+                    className="bg-amber-600 hover:bg-amber-500 text-black px-4 py-2 rounded-lg font-bold flex items-center gap-2 transition-colors"
+                  >
+                    Agregar <Check className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-black py-16 mt-20 border-t border-amber-900/50">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-2xl font-serif text-amber-400 mb-8 tracking-widest uppercase">Contáctanos</h2>
+          <div className="flex flex-col md:flex-row justify-center items-center gap-8 mb-12">
+            <a href="#" className="flex items-center gap-3 text-amber-200 hover:text-white transition-colors">
+              <Facebook className="w-6 h-6 text-blue-500" /> /GoldenAura_Peru
+            </a>
+            <a href="#" className="flex items-center gap-3 text-amber-200 hover:text-white transition-colors">
+              <Instagram className="w-6 h-6 text-pink-500" /> @goldenaura_sjg
+            </a>
+            <a href="#" className="flex items-center gap-3 text-amber-200 hover:text-white transition-colors">
+              <Phone className="w-6 h-6 text-green-500" /> Cell: 987 654 321
+            </a>
+          </div>
+          <p className="text-neutral-600 text-xs">© 2025 Golden Aura. Todos los derechos reservados. Elegancia garantizada.</p>
+        </div>
+      </footer>
+
+      {/* Carrito Sidebar */}
+      {isCartOpen && (
+        <div className="fixed inset-0 z-[60] flex justify-end">
+          <div className="absolute inset-0 bg-black/80" onClick={() => setIsCartOpen(false)}></div>
+          <div className="relative w-full max-w-md bg-neutral-900 h-full shadow-2xl p-6 border-l border-amber-900/50 flex flex-col">
+            <div className="flex justify-between items-center mb-8">
+              <h2 className="text-2xl font-serif text-amber-400">Tu Carrito</h2>
+              <button onClick={() => setIsCartOpen(false)}><X className="w-6 h-6" /></button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto space-y-4">
+              {cart.length === 0 ? (
+                <p className="text-center text-neutral-500 mt-20 italic">Tu bolsa de compras está vacía.</p>
+              ) : (
+                cart.map((item, index) => (
+                  <div key={index} className="flex gap-4 bg-neutral-800 p-3 rounded-lg border border-amber-900/20">
+                    <img src={item.image} alt={item.name} className="w-20 h-20 object-cover rounded" />
+                    <div className="flex-1">
+                      <h4 className="text-amber-100 font-medium">{item.name}</h4>
+                      <p className="text-amber-400 font-bold">S/ {item.price.toFixed(2)}</p>
+                      <button 
+                        onClick={() => removeFromCart(index)}
+                        className="text-red-400 text-xs mt-2 underline"
+                      >
+                        Quitar
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {cart.length > 0 && (
+              <div className="mt-8 border-t border-amber-900/50 pt-6">
+                <div className="flex justify-between text-xl mb-6">
+                  <span className="text-neutral-400">Total:</span>
+                  <span className="text-amber-400 font-bold font-serif text-2xl">S/ {total.toFixed(2)}</span>
+                </div>
+                <button 
+                  className="w-full bg-amber-600 hover:bg-amber-500 text-black font-bold py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(217,119,6,0.3)]"
+                  onClick={() => {
+                    const message = `Hola! Me gustaría pedir:\n${cart.map(i => `- ${i.name} (S/ ${i.price})`).join('\n')}\nTotal: S/ ${total}`;
+                    window.open(`https://wa.me/51987654321?text=${encodeURIComponent(message)}`);
+                  }}
+                >
+                  Confirmar Pedido vía WhatsApp
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;
